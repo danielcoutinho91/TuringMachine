@@ -1,9 +1,8 @@
 #AV1 - Exercício 2
 #Incrementar um binário
-fita 11011
+fita 11101
 init qi
 accept qa
-reject qr
 
 qi,0,qi,0,>
 qi,1,qi,1,>

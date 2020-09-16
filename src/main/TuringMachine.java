@@ -13,10 +13,10 @@ public class TuringMachine {
 	private ArrayList<Character> tape = new ArrayList<Character>();
 	private Set<String> states = new HashSet<String>();
 	private Set<Instruction> instructions = new HashSet<Instruction>();
-	private String initState;
-	private String acceptState;
-	private String rejectState;
-	private String currentState;
+	private String initState = "";
+	private String acceptState = "";
+	private String rejectState = "";
+	private String currentState = "";
 	
 	public TuringMachine(File file) throws Exception {
 		
@@ -104,9 +104,11 @@ public class TuringMachine {
 	
 	public void printStates() {
 		Iterator<String> statesIterator = this.states.iterator();
+		System.out.println("States:");
 		while(statesIterator.hasNext()) {
 			System.out.print(statesIterator.next() + " ");
 		}
+		System.out.println("\n");
 	}
 	
 	public void addInstruction(String readState, String readElement, String writeState, String writeElement, String direction) {
@@ -132,14 +134,21 @@ public class TuringMachine {
 	
 	public void printInstructions() {
 		Iterator<Instruction> instructionsIterator = this.instructions.iterator();
+		System.out.println("Instructions: ");
 		while(instructionsIterator.hasNext()) {
 			Instruction i = instructionsIterator.next();
-			System.out.println(i.getReadState() 
+			System.out.print(i.getReadState() 
 					+ " " + i.getReadElement()
 					+ " " + i.getWriteState() 
-					+ " " + i.getWriteElement() 
-					+ " " + i.getDirection());
+					+ " " + i.getWriteElement());
+			if (i.getDirection()) {
+				System.out.println(" >");
+			} else {
+				System.out.println(" <");
+			}
+			
 		}
+		System.out.println();
 	}
 	
 	public void run() throws InterruptedException {
@@ -151,7 +160,7 @@ public class TuringMachine {
 		
 		while((!currentState.equals(acceptState)) && (!currentState.contentEquals(rejectState))) {
 			validInstruction = false;
-			instruction = null;
+			instruction = null;			
 			
 			System.out.println("State: " + currentState);
 			for(int i = 0; i < index; i++) {
@@ -162,6 +171,7 @@ public class TuringMachine {
 				System.out.print(this.tape.get(j));
 			}
 			System.out.println("\n");
+			
 			Thread.currentThread().sleep(1000);
 			
 			Iterator<Instruction> instructionIterator = instructions.iterator();
