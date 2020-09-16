@@ -93,6 +93,7 @@ public class TuringMachine {
 		while(tapeIterator.hasNext()) {
 			System.out.print(tapeIterator.next());
 		}
+		System.out.println("\n");
 	}
 	
 	public void addState(String state) {
@@ -189,16 +190,22 @@ public class TuringMachine {
 				} else {
 					index--;
 				}
+				
+				if(index == 1 && this.tape.get(0) != '_') {
+					this.tape.add(0, '_');
+				}
 			
-			if (currentState.equals(acceptState)) {
-				System.out.println("State: " + currentState);
-				System.out.println("A entrada foi aceita");
-			}
-			
-			if (currentState.equals(rejectState)) {
-				System.out.println("State: " + currentState);
-				System.out.println("A entrada foi rejeitada");
-			}
+				if (currentState.equals(acceptState)) {
+					System.out.println("State: " + currentState);
+					printTape();
+					System.out.println("A entrada foi aceita");
+				}
+				
+				if (currentState.equals(rejectState)) {
+					System.out.println("State: " + currentState);
+					printTape();
+					System.out.println("A entrada foi rejeitada");
+				}
 				
 			}		
 		}

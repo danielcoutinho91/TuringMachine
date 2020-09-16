@@ -1,6 +1,6 @@
 #AV1 - Exercício 1
 #Verifica se binário termina com 01
-fita 10001
+fita 01001
 init qi
 accept qa
 reject qr
