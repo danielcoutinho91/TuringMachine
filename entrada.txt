@@ -1,13 +1,13 @@
 #AV1 - Exercício 1
 #Verifica se binário termina com 01
-fita 10101
+fita 10001
 init qi
 accept qa
 reject qr
 
 qi,0,qi,0,>
 qi,1,qi,1,>
-qi,_,q1,_,>
+qi,_,q1,_,<
 q1,0,qr,0,<
 q1,1,q2,1,<
 q2,0,qa,0,<

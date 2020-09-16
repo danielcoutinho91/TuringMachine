@@ -16,6 +16,7 @@ public class TuringMachine {
 	private String initState;
 	private String acceptState;
 	private String rejectState;
+	private String currentState;
 	
 	public TuringMachine(File file) throws Exception {
 		
@@ -62,7 +63,7 @@ public class TuringMachine {
 	    				String readState = line.split(",")[0].trim();
 	    				String readElement = line.split(",")[1].trim();
 	    				String writeState = line.split(",")[2].trim();
-	    				String writeElement = line.split(",")[3].trim();
+	    				String writeElement = line.split(",")[3].trim();	    				
 	    				String direction = line.split(",")[4].trim();
 	    				addState(readState);
 	    				addInstruction(readState, readElement, writeState, writeElement, direction);
@@ -82,7 +83,9 @@ public class TuringMachine {
 		char[] charInput = input.toCharArray();
 		for (char c : charInput) {
 			this.tape.add(c);
-		}		
+		}
+		this.tape.add(0, '_');
+		this.tape.add('_');		
 	}
 	
 	public void printTape() {
@@ -117,7 +120,7 @@ public class TuringMachine {
 			i.setReadElement(readElement);
 			i.setWriteState(writeState);
 			i.setWriteElement(writeElement);
-			if (direction == ">") {
+			if (direction.equals(">")) {
 				i.setDirection(true);
 			} else {
 				i.setDirection(false);
@@ -135,6 +138,69 @@ public class TuringMachine {
 					+ " " + i.getWriteState() 
 					+ " " + i.getWriteElement() 
 					+ " " + i.getDirection());
+		}
+	}
+	
+	public void run() throws InterruptedException {
+		currentState = initState;
+		char currentElement;
+		Instruction instruction;
+		int index = 1;
+		boolean validInstruction;
+		
+		while((!currentState.equals(acceptState)) && (!currentState.contentEquals(rejectState))) {
+			validInstruction = false;
+			instruction = null;
+			
+			System.out.println("State: " + currentState);
+			for(int i = 0; i < index; i++) {
+				System.out.print(this.tape.get(i));
+			}
+			System.out.print("->");
+			for(int j = index; j < this.tape.size(); j++) {
+				System.out.print(this.tape.get(j));
+			}
+			System.out.println("\n");
+			Thread.currentThread().sleep(1000);
+			
+			Iterator<Instruction> instructionIterator = instructions.iterator();
+			
+			while(instructionIterator.hasNext() && validInstruction == false) {
+				instruction = instructionIterator.next();
+				currentElement = this.tape.get(index);
+				
+				if (instruction.getReadState().equals(currentState) && instruction.getReadElement().charAt(0) == currentElement) {
+					validInstruction = true;
+				}
+			}
+			
+			if (validInstruction == false) {
+				System.out.println("Não foi encontrado uma instrução válida");
+				currentState = rejectState;
+			} else {
+				String writeState = instruction.getWriteState();
+				char writeElement = instruction.getWriteElement().charAt(0);
+				
+				currentState = writeState;
+				this.tape.set(index, writeElement);				
+				
+				if (instruction.getDirection()) {
+					index++;					
+				} else {
+					index--;
+				}
+			
+			if (currentState.equals(acceptState)) {
+				System.out.println("State: " + currentState);
+				System.out.println("A entrada foi aceita");
+			}
+			
+			if (currentState.equals(rejectState)) {
+				System.out.println("State: " + currentState);
+				System.out.println("A entrada foi rejeitada");
+			}
+				
+			}		
 		}
 	}
 
