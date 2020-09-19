@@ -1,0 +1,22 @@
+#AV1 - Exercício 3
+#Verificar se binário é múltiplo de 5
+fita 110111
+init qi
+accept qa
+reject qr
+
+qi,0,qi,0,>
+qi,_,qa,_,<
+qi,1,q1,1,>
+q1,0,q2,0,>
+q1,1,q3,1,>
+q1,_,qr,_,<
+q2,0,q4,0,>
+q2,1,qi,1,>
+q2,_,qr,_,<
+q3,0,q1,0,>
+q3,1,q2,1,>
+q3,_,qr,_,<
+q4,0,q3,0,>
+q4,1,q4,1,>
+q4,_,qr,_,<

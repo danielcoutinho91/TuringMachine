@@ -204,6 +204,11 @@ public class TuringMachine {
 				if(index == 1 && this.tape.get(0) != '_') {
 					this.tape.add(0, '_');
 				}
+				
+				if( (index == this.tape.size() || index == this.tape.size() - 2) && this.tape.get(this.tape.size()-1) != '_') {
+					this.tape.add('_');
+				}
+			
 			
 				if (currentState.equals(acceptState)) {
 					System.out.println("State: " + currentState);
