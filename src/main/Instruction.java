@@ -51,7 +51,7 @@ public class Instruction {
 	}
 	
 	public boolean valid (String readState, String readElement) {
-		if (this.readState.equals(readState) && this.readElement.contentEquals(readElement)) {
+		if (this.readState.equals(readState) && this.readElement.equals(readElement)) {
 			return false;
 		}
 		return true;

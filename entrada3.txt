@@ -1,6 +1,6 @@
 #AV1 - Exercício 3
 #Verificar se binário é múltiplo de 5
-fita 110111
+fita 11001
 init qi
 accept qa
 reject qr
